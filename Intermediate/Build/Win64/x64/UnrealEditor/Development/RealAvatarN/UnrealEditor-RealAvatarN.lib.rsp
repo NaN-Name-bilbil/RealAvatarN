@@ -1,0 +1,15 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UnrealEditor-RealAvatarN.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"F:\UE_Project\UE5.5\test\MyProject\Intermediate\Build\Win64\x64\MyProjectEditor\Development\UnrealEd\SharedPCH.UnrealEd.Project.ValApi.Cpp20.h.obj"
+"F:\UE_Project\UE5.5\test\MyProject\Plugins\RealAvatarN\Intermediate\Build\Win64\x64\UnrealEditor\Development\RealAvatarN\Module.RealAvatarN.cpp.obj"
+"F:\UE_Project\UE5.5\test\MyProject\Plugins\RealAvatarN\Intermediate\Build\Win64\x64\UnrealEditor\Development\RealAvatarN\DigHumanSubsystem.cpp.obj"
+"F:\UE_Project\UE5.5\test\MyProject\Plugins\RealAvatarN\Intermediate\Build\Win64\x64\UnrealEditor\Development\RealAvatarN\NewAudioCaptureComponent.cpp.obj"
+"F:\UE_Project\UE5.5\test\MyProject\Plugins\RealAvatarN\Intermediate\Build\Win64\x64\UnrealEditor\Development\RealAvatarN\RealAvatarN.cpp.obj"
+"F:\UE_Project\UE5.5\test\MyProject\Plugins\RealAvatarN\Intermediate\Build\Win64\x64\UnrealEditor\Development\RealAvatarN\Default.rc2.res"
+/OUT:"F:\UE_Project\UE5.5\test\MyProject\Plugins\RealAvatarN\Intermediate\Build\Win64\x64\UnrealEditor\Development\RealAvatarN\UnrealEditor-RealAvatarN.lib"

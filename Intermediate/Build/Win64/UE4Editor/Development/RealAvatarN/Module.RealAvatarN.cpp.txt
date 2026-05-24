@@ -1,0 +1,92 @@
+F:\UE_Project\UE4.27\TST\Plugins\RealAvatarN\Intermediate\Build\Win64\UE4Editor\Development\RealAvatarN\Definitions.RealAvatarN.h
+F:/UE_Project/UE4.27/TST/Plugins/RealAvatarN/Source/RealAvatarN/Private/DigHumanSubsystem.cpp
+F:\UE_Project\UE4.27\TST\Plugins\RealAvatarN\Source\RealAvatarN\Public\DigHumanSubsystem.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\UMG\Public\Components/Image.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\UMG\Public\Components/Widget.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\UMG\Public\Components/Visual.h
+F:\UE4.27\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\Visual.generated.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\UMG\Public\Components/SlateWrapperTypes.h
+F:\UE4.27\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\SlateWrapperTypes.generated.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\UMG\Public\Slate/WidgetTransform.h
+F:\UE4.27\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\WidgetTransform.generated.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\UMG\Public\Blueprint/WidgetNavigation.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\SlateCore\Public\Types/NavigationMetaData.h
+F:\UE4.27\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\WidgetNavigation.generated.h
+F:\UE4.27\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\Widget.generated.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\Engine\Public\Slate/SlateTextureAtlasInterface.h
+F:\UE4.27\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SlateTextureAtlasInterface.generated.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\Engine\Classes\Engine/StreamableManager.h
+F:\UE4.27\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\UMG\Image.generated.h
+F:\UE_Project\UE4.27\TST\Plugins\RealAvatarN\Source\Core\include\DigitalHumanAPI.h
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\INCLUDE\stdbool.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\Engine\Classes\Components/AudioComponent.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\Engine\Classes\Sound/QuartzSubscription.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\AudioMixer\Public\Quartz/AudioMixerClockHandle.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\AudioMixer\Public\Quartz/QuartzSubsystem.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\AudioMixer\Public\Quartz/AudioMixerClockManager.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\AudioMixer\Public\Quartz\AudioMixerClock.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\AudioMixer\Public\Quartz/QuartzMetronome.h
+F:\UE4.27\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\AudioMixer\QuartzSubsystem.generated.h
+F:\UE4.27\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\AudioMixer\AudioMixerClockHandle.generated.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\AudioMixer\Public\Quartz/AudioMixerQuantizedCommands.h
+F:\UE4.27\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\AudioComponent.generated.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\Engine\Classes\Sound/SoundWaveProcedural.h
+F:\UE4.27\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\SoundWaveProcedural.generated.h
+F:\UE_Project\UE4.27\TST\Plugins\RealAvatarN\Intermediate\Build\Win64\UE4Editor\Inc\RealAvatarN\DigHumanSubsystem.generated.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\ImageWrapper\Public\IImageWrapper.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\ImageWrapper\Public\IImageWrapperModule.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\Engine\Classes\Kismet/GameplayStatics.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\Engine\Classes\Kismet/KismetSystemLibrary.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\CoreUObject\Public\UObject/PropertyAccessUtil.h
+F:\UE4.27\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\KismetSystemLibrary.generated.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\Engine\Classes\Sound/DialogueTypes.h
+F:\UE4.27\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\DialogueTypes.generated.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\Engine\Classes\Kismet\GameplayStaticsTypes.h
+F:\UE4.27\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\GameplayStaticsTypes.generated.h
+F:\UE4.27\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\GameplayStatics.generated.h
+F:/UE_Project/UE4.27/TST/Plugins/RealAvatarN/Source/RealAvatarN/Private/NewAudioCaptureComponent.cpp
+F:\UE_Project\UE4.27\TST\Plugins\RealAvatarN\Source\RealAvatarN\Public\NewAudioCaptureComponent.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\AudioCaptureCore\Public\AudioCaptureCore.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\AudioCaptureCore\Public\AudioCaptureDeviceInterface.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\SignalProcessing\Public\DSP/Delay.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\SignalProcessing\Public\DSP/WaveTableOsc.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\SignalProcessing\Public\DSP/EnvelopeFollower.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\AudioMixer\Public\Components/SynthComponent.h
+F:\UE4.27\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\AudioMixer\SynthComponent.generated.h
+F:\UE_Project\UE4.27\TST\Plugins\RealAvatarN\Intermediate\Build\Win64\UE4Editor\Inc\RealAvatarN\NewAudioCaptureComponent.generated.h
+F:/UE_Project/UE4.27/TST/Plugins/RealAvatarN/Source/RealAvatarN/Private/RealAvatarN.cpp
+F:\UE_Project\UE4.27\TST\Plugins\RealAvatarN\Source\RealAvatarN\Public\RealAvatarN.h
+F:\UE_Project\UE4.27\TST\Plugins\RealAvatarN\Source\ThirdParty\onnxruntime\Include\onnxruntime_cxx_api.h
+F:\UE_Project\UE4.27\TST\Plugins\RealAvatarN\Source\ThirdParty\onnxruntime\Include\onnxruntime_c_api.h
+F:\UE_Project\UE4.27\TST\Plugins\RealAvatarN\Source\ThirdParty\onnxruntime\Include\onnxruntime_float16.h
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\INCLUDE\cmath
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\INCLUDE\limits
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\INCLUDE\cfloat
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\INCLUDE\cwchar
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\INCLUDE\cstdio
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\INCLUDE\array
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\INCLUDE\xutility
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\INCLUDE\memory
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\INCLUDE\iosfwd
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\INCLUDE\xmemory
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\INCLUDE\stdexcept
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\INCLUDE\xstring
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\INCLUDE\__msvc_sanitizer_annotate_container.hpp
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\INCLUDE\string
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\INCLUDE\cctype
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\INCLUDE\vector
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\INCLUDE\__msvc_bit_utils.hpp
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\INCLUDE\unordered_map
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\INCLUDE\xhash
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\INCLUDE\list
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\INCLUDE\xbit_ops.h
+F:\UE_Project\UE4.27\TST\Plugins\RealAvatarN\Source\ThirdParty\onnxruntime\Include\onnxruntime_cxx_inline.h
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\INCLUDE\algorithm
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\INCLUDE\functional
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.38.33130\INCLUDE\iterator
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\Projects\Public\Interfaces/IPluginManager.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\Projects\Public\PluginDescriptor.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\Projects\Public\ModuleDescriptor.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\Projects\Public\CustomBuildSteps.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\Projects\Public\LocalizationDescriptor.h
+F:\UE4.27\UE_4.27\Engine\Source\Runtime\Projects\Public\PluginReferenceDescriptor.h

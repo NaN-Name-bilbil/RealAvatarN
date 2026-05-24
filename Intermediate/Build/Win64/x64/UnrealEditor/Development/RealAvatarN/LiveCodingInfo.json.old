@@ -1,0 +1,11 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.RealAvatarN.cpp.obj": [
+			"DigHumanSubsystem.gen.cpp.obj",
+			"RealAvatarN.init.gen.cpp.obj",
+			"DigHumanSubsystem.cpp.obj",
+			"RealAvatarN.cpp.obj"
+		]
+	}
+}

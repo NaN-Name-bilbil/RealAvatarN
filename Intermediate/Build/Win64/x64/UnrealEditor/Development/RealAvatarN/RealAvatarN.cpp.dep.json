@@ -1,0 +1,30 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "f:\\ue_project\\ue5.5\\test\\myproject\\plugins\\realavatarn\\source\\realavatarn\\private\\realavatarn.cpp",
+        "ProvidedModule": "",
+        "PCH": "f:\\ue_project\\ue5.5\\test\\myproject\\intermediate\\build\\win64\\x64\\myprojecteditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "f:\\ue_project\\ue5.5\\test\\myproject\\plugins\\realavatarn\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\realavatarn\\definitions.realavatarn.h",
+            "f:\\ue_project\\ue5.5\\test\\myproject\\plugins\\realavatarn\\source\\realavatarn\\public\\realavatarn.h",
+            "f:\\ue_project\\ue5.5\\test\\myproject\\plugins\\realavatarn\\source\\thirdparty\\onnxruntime\\include\\onnxruntime_cxx_api.h",
+            "f:\\ue_project\\ue5.5\\test\\myproject\\plugins\\realavatarn\\source\\thirdparty\\onnxruntime\\include\\onnxruntime_c_api.h",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\stdbool.h",
+            "f:\\ue_project\\ue5.5\\test\\myproject\\plugins\\realavatarn\\source\\thirdparty\\onnxruntime\\include\\onnxruntime_float16.h",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\array",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\string",
+            "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.38.33130\\include\\cctype",
+            "f:\\ue_project\\ue5.5\\test\\myproject\\plugins\\realavatarn\\source\\thirdparty\\onnxruntime\\include\\onnxruntime_cxx_inline.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\projects\\public\\interfaces\\ipluginmanager.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\projects\\public\\plugindescriptor.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\projects\\public\\custombuildsteps.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\projects\\public\\localizationdescriptor.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\projects\\public\\moduledescriptor.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\projects\\public\\plugindisalloweddescriptor.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\projects\\public\\pluginreferencedescriptor.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\projects\\public\\versescope.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

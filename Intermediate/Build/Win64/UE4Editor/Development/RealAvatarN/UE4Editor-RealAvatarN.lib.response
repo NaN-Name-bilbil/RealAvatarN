@@ -1,0 +1,13 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UE4Editor-RealAvatarN.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"F:\UE_Project\UE4.27\TST\Intermediate\Build\Win64\TSTEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.obj"
+"F:\UE_Project\UE4.27\TST\Plugins\RealAvatarN\Intermediate\Build\Win64\UE4Editor\Development\RealAvatarN\Module.RealAvatarN.cpp.obj"
+"F:\UE_Project\UE4.27\TST\Plugins\RealAvatarN\Intermediate\Build\Win64\UE4Editor\Development\RealAvatarN\Module.RealAvatarN.gen.cpp.obj"
+"F:\UE_Project\UE4.27\TST\Plugins\RealAvatarN\Intermediate\Build\Win64\UE4Editor\Development\RealAvatarN\Default.rc2.res"
+/OUT:"F:\UE_Project\UE4.27\TST\Plugins\RealAvatarN\Intermediate\Build\Win64\UE4Editor\Development\RealAvatarN\UE4Editor-RealAvatarN.lib"

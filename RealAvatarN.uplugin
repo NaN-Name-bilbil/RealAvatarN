@@ -1,0 +1,24 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "RealAvatarN",
+	"Description": "RealAvatarN 是一款基于开源项目 HeyGem 的 Unreal Engine 数字人插件，将 AI 驱动的实时口型同步能力与 UE 的强大渲染管线深度融合。插件封装了核心推理算法，提供简洁的蓝图与 C++ 接口，让开发者无需关心底层细节即可快速构建高质量的交互式数字人应用。",
+	"Category": "Other",
+	"CreatedBy": "NaN_Name",
+	"CreatedByURL": "https://space.bilibili.com/349004635?spm_id_from=333.788.0.0",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "https://github.com/NaN-Name-bilbil/RealAvatarN",
+	"CanContainContent": true,
+	"IsBetaVersion": false,
+	"IsExperimentalVersion": false,
+	"Installed": false,
+	"Modules": [
+		{
+			"Name": "RealAvatarN",
+			"Type": "Runtime",
+			"LoadingPhase": "Default"
+		}
+	]
+}

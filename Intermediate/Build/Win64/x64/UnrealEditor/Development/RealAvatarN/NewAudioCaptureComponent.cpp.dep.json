@@ -1,0 +1,38 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "f:\\ue_project\\ue5.5\\test\\myproject\\plugins\\realavatarn\\source\\realavatarn\\private\\newaudiocapturecomponent.cpp",
+        "ProvidedModule": "",
+        "PCH": "f:\\ue_project\\ue5.5\\test\\myproject\\intermediate\\build\\win64\\x64\\myprojecteditor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "f:\\ue_project\\ue5.5\\test\\myproject\\plugins\\realavatarn\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\realavatarn\\definitions.realavatarn.h",
+            "f:\\ue_project\\ue5.5\\test\\myproject\\plugins\\realavatarn\\source\\realavatarn\\public\\newaudiocapturecomponent.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\audiocapturecore\\public\\audiocapturecore.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\audiocapturecore\\public\\audiocapturedeviceinterface.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\signalprocessing\\public\\dsp\\delay.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\signalprocessing\\public\\dsp\\envelopefollower.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\signalprocessing\\public\\dsp\\floatarraymath.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\audiomixer\\public\\components\\synthcomponent.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\engine\\classes\\components\\audiocomponent.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\engine\\public\\audio\\soundparametercontrollerinterface.h",
+            "f:\\ue_5.5\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\soundparametercontrollerinterface.generated.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\audioextensions\\public\\iaudioparametertransmitter.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\audiomixer\\public\\quartz\\audiomixerquantizedcommands.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\audiomixer\\public\\quartz\\audiomixerclock.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\audiomixer\\public\\quartz\\quartzmetronome.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\engine\\classes\\sound\\quartzsubscription.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\engine\\classes\\sound\\quartzsubscriptiontoken.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\engine\\classes\\sound\\quartzinterfaces.h",
+            "f:\\ue_5.5\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\audiocomponent.generated.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\engine\\classes\\sound\\soundwaveprocedural.h",
+            "f:\\ue_5.5\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\uht\\soundwaveprocedural.generated.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\engine\\classes\\sound\\soundgenerator.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\engine\\public\\audiodevicemanager.h",
+            "f:\\ue_5.5\\engine\\source\\runtime\\engine\\public\\audiothread.h",
+            "f:\\ue_5.5\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\audiomixer\\uht\\synthcomponent.generated.h",
+            "f:\\ue_project\\ue5.5\\test\\myproject\\plugins\\realavatarn\\intermediate\\build\\win64\\unrealeditor\\inc\\realavatarn\\uht\\newaudiocapturecomponent.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

@@ -1,0 +1,14 @@
+{
+	"RemapUnityFiles": 
+	{
+		"Module.RealAvatarN.cpp.obj": [
+			"DigHumanSubsystem.gen.cpp.obj",
+			"NewAudioCaptureComponent.gen.cpp.obj",
+			"RealAvatarN.init.gen.cpp.obj",
+			"PerModuleInline.gen.cpp.obj",
+			"DigHumanSubsystem.cpp.obj",
+			"NewAudioCaptureComponent.cpp.obj",
+			"RealAvatarN.cpp.obj"
+		]
+	}
+}
