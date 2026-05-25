@@ -88,6 +88,10 @@ Before using the plugin, make sure the following environments are correctly conf
 
 ### 1. 安装插件 / Install Plugin
 
+**推荐使用 `git clone`**，可确保文件完整且目录名正确：
+
+**Recommended: use `git clone`** to ensure file integrity and correct folder naming:
+
 ```bash
 # 克隆仓库 / Clone the repository
 git clone https://github.com/your-username/RealAvatarN.git
@@ -96,6 +100,12 @@ git clone https://github.com/your-username/RealAvatarN.git
 # Copy the plugin folder into your UE project's Plugins directory
 cp -r RealAvatarN /YourProject/Plugins/
 ```
+
+> ⚠️ **直接下载 ZIP 的用户注意 / Note for ZIP downloaders**
+>
+> GitHub 下载的压缩包解压后目录名为 `RealAvatarN-main`，**必须将文件夹重命名为 `RealAvatarN`**，否则 UE 将无法正确识别插件。
+>
+> The folder extracted from GitHub ZIP is named `RealAvatarN-main`. **You must rename it to `RealAvatarN`** before placing it in the `Plugins` directory, otherwise UE will fail to recognize the plugin.
 
 ### 2. 启用插件 / Enable Plugin
 
