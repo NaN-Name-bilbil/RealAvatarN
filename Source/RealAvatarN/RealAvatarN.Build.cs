@@ -33,6 +33,25 @@ public class RealAvatarN : ModuleRules
 
         if (Target.Platform == UnrealTargetPlatform.Win64)
         {
+            //拷贝一下model文件夹
+            string PluginDir = Path.GetFullPath(Path.Combine(ModuleDirectory, "../../"));
+            string ModelDir = Path.Combine(PluginDir, "Model");
+
+            if (Directory.Exists(ModelDir))
+            {
+                foreach (string FilePath in Directory.GetFiles(
+                    ModelDir,
+                    "*",
+                    SearchOption.AllDirectories))
+                {
+                    string RelativePath = FilePath.Substring(ModelDir.Length + 1);
+                    System.Console.WriteLine("model文件夹:" + FilePath);
+                    RuntimeDependencies.Add(
+                        FilePath
+                    );
+                }
+            }
+
             // Build.cs 中
             PublicIncludePaths.Add(IncDirPath);
             RelativeLibDirPath = Path.Combine("..", "ThirdParty", "onnxruntime", "Lib", PlatformDir, "onnxruntime", ArchitectureString);
@@ -217,7 +236,7 @@ public class RealAvatarN : ModuleRules
         // 只在打包时执行（非编辑器构建）
         if (Target.Type != TargetType.Editor)
         {
-            CopyFolder(modelSourceDir, modelTarget);
+            //CopyFolder(modelSourceDir, modelTarget);
         }
 
 
