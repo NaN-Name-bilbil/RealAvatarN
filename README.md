@@ -20,6 +20,12 @@
 
 ---
 
+## 🎬 效果演示 / Demo
+
+https://github.com/NaN-Name-bilbil/RealAvatarN/raw/main/Model/preview.mp4
+
+---
+
 ## 📖 项目介绍 / Introduction
 
 **RealAvatarN** 是一款为 Unreal Engine 自主设计开发的数字人插件，参考 [HeyGem](https://github.com/GuijiAI/HeyGem.ai) 的技术框架思路，从零以 C++ 重新实现了完整的推理管线，并使用了 DUIX.COM / HeyGem 提供的模型权重。插件将 AI 驱动的实时口型同步能力与 UE 渲染管线深度融合，封装为简洁的蓝图（Blueprint）与 C++ 接口，开发者无需关心底层细节即可快速构建高质量的交互式数字人应用。
@@ -94,7 +100,7 @@ Before using the plugin, make sure the following environments are correctly conf
 
 ```bash
 # 克隆仓库 / Clone the repository
-git clone https://github.com/your-username/RealAvatarN.git
+git clone https://github.com/NaN-Name-bilbil/RealAvatarN.git
 
 # 将插件目录复制到你的 UE 项目 Plugins 文件夹
 # Copy the plugin folder into your UE project's Plugins directory
