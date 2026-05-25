@@ -20,14 +20,6 @@
 
 ---
 
-## 🎬 效果演示 / Demo
-
-https://github.com/NaN-Name-bilbil/RealAvatarN/raw/main/Model/preview.mp4
-
-<video src="https://github.com/NaN-Name-bilbil/RealAvatarN/raw/main/Model/preview.mp4" controls width="100%"></video>
-
----
-
 ## 📖 项目介绍 / Introduction
 
 **RealAvatarN** 是一款为 Unreal Engine 自主设计开发的数字人插件，参考 [HeyGem](https://github.com/GuijiAI/HeyGem.ai) 的技术框架思路，从零以 C++ 重新实现了完整的推理管线，并使用了 DUIX.COM / HeyGem 提供的模型权重。插件将 AI 驱动的实时口型同步能力与 UE 渲染管线深度融合，封装为简洁的蓝图（Blueprint）与 C++ 接口，开发者无需关心底层细节即可快速构建高质量的交互式数字人应用。
@@ -45,6 +37,14 @@ https://github.com/NaN-Name-bilbil/RealAvatarN/raw/main/Model/preview.mp4
 | 🔀 **动态视频过渡** Dynamic Transition | 待机、说话、过渡段无缝切换，消除画面割裂感 / Seamless switching between idle/talk/transition clips |
 | 🔧 **蓝图 & C++ 双支持** Blueprint & C++ | 设计师与程序员均可上手，接口完整暴露 / Full API access for both designers and engineers |
 | 🖥️ **全版本兼容** Wide UE Compatibility | 支持 UE 4.27 至 UE 5.7，覆盖主流商业及最新版本 / UE 4.27 through 5.7 supported |
+
+---
+
+## 🎬 效果演示 / Demo
+
+[![效果演示](https://github.com/NaN-Name-bilbil/RealAvatarN/raw/main/Model/preview.gif)](https://space.bilibili.com/349004635?spm_id_from=333.1007.0.0)
+
+> 👆 点击 GIF 跳转 B 站查看完整演示视频 / Click GIF to watch the full demo on Bilibili
 
 ---
 
