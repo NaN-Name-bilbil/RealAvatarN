@@ -4,15 +4,15 @@
 
 # RealAvatarN
 
-**基于 HeyGem 的 Unreal Engine 数字人插件 · 实时流式口型推理 · 动态视频无缝切换**
+**自主实现的 Unreal Engine 数字人插件 · 实时流式口型推理 · 动态视频无缝切换**
 
-*A UE Plugin for AI-Driven Digital Humans — Real-time Streaming Lip-Sync & Dynamic Video Transition*
+*An Original C++ UE Plugin for AI-Driven Digital Humans — Real-time Streaming Lip-Sync & Dynamic Video Transition*
 
 ---
 
 [![UE Version](https://img.shields.io/badge/Unreal%20Engine-4.27%20–%205.7-1D9E75?style=flat-square&logo=unrealengine&logoColor=white)](https://www.unrealengine.com)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20x64-0078D6?style=flat-square&logo=windows&logoColor=white)]()
-[![Based On](https://img.shields.io/badge/Based%20On-HeyGem-9B59B6?style=flat-square)](https://github.com/GuijiAI/HeyGem.ai)
+[![Model From](https://img.shields.io/badge/Model%20From-DUIX.COM%20%2F%20HeyGem-9B59B6?style=flat-square)](https://github.com/GuijiAI/HeyGem.ai)
 [![ONNX](https://img.shields.io/badge/ONNX%20Runtime-GPU%201.19.2-FF6B35?style=flat-square)]()
 [![TensorRT](https://img.shields.io/badge/TensorRT-10.x-76B900?style=flat-square&logo=nvidia&logoColor=white)]()
 
@@ -22,9 +22,9 @@
 
 ## 📖 项目介绍 / Introduction
 
-**RealAvatarN** 是一款基于开源项目 [HeyGem](https://github.com/GuijiAI/HeyGem.ai) 的 Unreal Engine 数字人插件，将 AI 驱动的实时口型同步能力与 UE 的强大渲染管线深度融合。核心推理算法已完整封装为插件模块，提供简洁的蓝图（Blueprint）与 C++ 接口，开发者无需关心底层细节即可快速构建高质量的交互式数字人应用。
+**RealAvatarN** 是一款为 Unreal Engine 自主设计开发的数字人插件，参考 [HeyGem](https://github.com/GuijiAI/HeyGem.ai) 的技术框架思路，从零以 C++ 重新实现了完整的推理管线，并使用了 DUIX.COM / HeyGem 提供的模型权重。插件将 AI 驱动的实时口型同步能力与 UE 渲染管线深度融合，封装为简洁的蓝图（Blueprint）与 C++ 接口，开发者无需关心底层细节即可快速构建高质量的交互式数字人应用。
 
-**RealAvatarN** is an Unreal Engine plugin built upon the open-source [HeyGem](https://github.com/GuijiAI/HeyGem.ai) project, deeply integrating AI-driven real-time lip-sync with UE's rendering pipeline. The core inference algorithm is fully encapsulated into the plugin module, exposing clean Blueprint and C++ APIs so developers can build high-quality interactive digital human applications without touching low-level details.
+**RealAvatarN** is a self-developed Unreal Engine plugin for digital humans, independently implemented in C++ from the ground up — inspired by the technical framework of [HeyGem](https://github.com/GuijiAI/HeyGem.ai), with model weights sourced from DUIX.COM / HeyGem. The entire inference pipeline has been rewritten natively in C++ and deeply integrated with UE's rendering pipeline, exposing clean Blueprint and C++ APIs so developers can build high-quality interactive digital human applications without touching low-level details.
 
 ---
 
@@ -32,10 +32,9 @@
 
 | 功能 / Feature | 说明 / Description |
 |---|---|
-| 🎙️ **实时流式推理** Real-time Streaming | 逐帧流式输出口型驱动数据，低延迟连续对话 / Frame-by-frame streaming lip-drive data, ultra-low latency |
-| 👄 **视频口型同步** Video Lip Sync | 基于 HeyGem 算法精准驱动视频序列，表情自然还原 / Accurate lip-sync on video sequences via HeyGem algorithm |
+| 🎙️ **本地离线实时流式推理** Local Offline Real-time Streaming | 纯本地推理，无需联网，逐帧流式输出口型驱动数据，低延迟连续对话 / Fully local & offline inference, no network required, frame-by-frame streaming with ultra-low latency |
+| 👄 **视频口型同步** Video Lip Sync | C++ 自实现推理管线精准驱动视频序列口型，表情自然还原 / Accurate lip-sync on video sequences via self-implemented C++ inference pipeline |
 | 🔀 **动态视频过渡** Dynamic Transition | 待机、说话、过渡段无缝切换，消除画面割裂感 / Seamless switching between idle/talk/transition clips |
-| 📦 **算法封装** Encapsulated Core | 核心推理模块黑盒化，零侵入接入现有项目 / Core inference fully encapsulated, zero-intrusion integration |
 | 🔧 **蓝图 & C++ 双支持** Blueprint & C++ | 设计师与程序员均可上手，接口完整暴露 / Full API access for both designers and engineers |
 | 🖥️ **全版本兼容** Wide UE Compatibility | 支持 UE 4.27 至 UE 5.7，覆盖主流商业及最新版本 / UE 4.27 through 5.7 supported |
 
@@ -50,9 +49,9 @@
 | 纯 ONNX GPU / Pure ONNX GPU | ~55 ms | ~18 fps |
 | ONNX + TensorRT | ~27 ms | **~40 fps** ✅ |
 
-> 💡 游戏本 RTX 4060 也可正常运行。4K 数字人建议 RAM ≥ 64GB。
+> 💡 游戏本 RTX 4060 可运行，实测帧率约 **22 fps**。4K 数字人 RAM **必须 ≥ 32GB**（视频预加载可能占用约 16GB）。
 >
-> A gaming laptop with RTX 4060 can run this plugin. For 4K avatars, 64GB RAM is recommended.
+> A gaming laptop with RTX 4060 can run this plugin at ~**22 fps**. For 4K avatars, RAM **must be ≥ 32GB** (video preloading may consume ~16GB).
 
 ---
 
@@ -143,9 +142,11 @@ In your character Blueprint, drag in the **`Start Realtime Drive`** node and pas
 
 - 插件默认使用 `Plugins/RealAvatar/Model/` 目录下的演示模型及视频
 - **演示所用的豆包数字人框架需另行购买**：[购买链接](https://www.ifdian.net/item/1871d162443d11f1846d5254001e7c00)
+- 为保障插件的持续迭代与技术支持，**RealAvatarN 采用订阅授权制**，获取激活码后方可使用完整功能：[获取授权 / Get License](https://ifdian.net/item/dc71566241d811f18e6552540025c377)
 
 - The plugin uses demo models and videos from `Plugins/RealAvatar/Model/` by default
 - **The Doubao digital human framework used in demos must be purchased separately**: [Purchase Link](https://www.ifdian.net/item/1871d162443d11f1846d5254001e7c00)
+- To support continued development and maintenance, **RealAvatarN requires a subscription license**. An activation code is needed to unlock full functionality: [Get License](https://ifdian.net/item/dc71566241d811f18e6552540025c377)
 
 ### 音频格式 / Audio Format
 
@@ -250,17 +251,23 @@ FFmpeg            :  Latest stable
 
 | UE 版本 | Windows | Linux | macOS |
 |---|---|---|---|
-| UE 4.27 | ✅ | × | × |
-| UE 5.0 – 5.3 | ✅ | × | × |
-| UE 5.4 – 5.7 | ✅ | × | × |
+| UE 4.27 | ✅ | ❌ 暂不支持 | ❌ 暂不支持 |
+| UE 5.0 – 5.3 | ✅ | ❌ 暂不支持 | ❌ 暂不支持 |
+| UE 5.4 – 5.7 | ✅ | ❌ 暂不支持 | ❌ 暂不支持 |
+
+> 目前仅支持 **Windows x64** 平台。Linux / macOS 支持计划后续评估。
+>
+> Currently **Windows x64** only. Linux / macOS support is not available at this time.
 
 ---
 
 ## 📜 开源协议 & 致谢 / License & Credits
 
-> **Built with [DUIX.COM](https://www.duix.com) / [HeyGem](https://github.com/GuijiAI/HeyGem.ai)**
+## 📜 开源协议 & 致谢 / License & Credits
 
-本项目基于 [HeyGem](https://github.com/GuijiAI/HeyGem.ai)（DUIX.COM / GuijiAI）进行二次开发，受 **DUIX.COM Community License** 约束。
+> **Model weights provided by [DUIX.COM](https://www.duix.com) / [HeyGem](https://github.com/GuijiAI/HeyGem.ai) · Built with DUIX.COM**
+
+本插件的推理代码为**自主 C++ 实现**，框架设计参考了 HeyGem 的技术思路，模型权重来源于 DUIX.COM / HeyGem，受 **DUIX.COM Community License** 约束。
 
 根据该协议，本插件的所有使用者和分发者须注意：
 
@@ -271,7 +278,7 @@ FFmpeg            :  Latest stable
 
 ---
 
-This project is built upon [HeyGem](https://github.com/GuijiAI/HeyGem.ai) by DUIX.COM / GuijiAI and is subject to the **DUIX.COM Community License**.
+The inference code in this plugin is an **original C++ implementation**, inspired by HeyGem's technical framework. Model weights are sourced from DUIX.COM / HeyGem and are subject to the **DUIX.COM Community License**.
 
 By using or distributing this plugin, you agree to:
 
@@ -288,6 +295,6 @@ Full license: [DUIX.COM Community License](https://github.com/GuijiAI/HeyGem.ai/
 
 Made with ♥ for the UE Digital Human Community
 
-[📺 B站教程](https://space.bilibili.com/349004635?spm_id_from=333.788.0.0) · [📖 Wiki 文档](#) · [🐛 Issues](../../issues) · [💬 Discussions](../../discussions)
+[📺 B站教程](https://space.bilibili.com/349004635?spm_id_from=333.1007.0.0) · [📖 Wiki 文档](#) · [🐛 Issues](../../issues) · [💬 Discussions](../../discussions)
 
 </div>
