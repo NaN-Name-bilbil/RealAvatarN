@@ -24,6 +24,8 @@
 
 https://github.com/NaN-Name-bilbil/RealAvatarN/raw/main/Model/preview.mp4
 
+<video src="https://github.com/NaN-Name-bilbil/RealAvatarN/raw/main/Model/preview.mp4" controls width="100%"></video>
+
 ---
 
 ## 📖 项目介绍 / Introduction
