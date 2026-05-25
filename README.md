@@ -111,9 +111,41 @@ The plugin includes a fully annotated Demo project. First-time users are encoura
 
 ### 4. 调用蓝图节点 / Call Blueprint Node
 
-在角色蓝图中拖入 **`Start Realtime Drive`** 节点，传入对应参数即可驱动数字人。
+插件提供两种驱动模式，按需选择：
 
-In your character Blueprint, drag in the **`Start Realtime Drive`** node and pass the required parameters to drive the avatar.
+The plugin offers two driving modes — choose based on your use case:
+
+**🔴 实时流式模式 / Real-time Streaming Mode**（推荐 / Recommended）
+
+在关卡蓝图中按以下流程调用：
+
+In the Level Blueprint, call in this order:
+
+1. `InitSystemModel` — 初始化系统模型 / Initialize the system model
+2. `StartRealtimeDrive` — 初始化并预缓存视频 / Initialize and pre-cache video
+3. `PushAudioSamples` — 实时将用户音频推入推理管线 / Push user audio into the inference pipeline in real time
+
+> - 🎙️ 音频格式：**16000 Hz，单声道** / Audio format: **16000 Hz, mono**
+> - ⏱️ 推荐按 **10ms / 160 samples** 分段推入 / Recommended chunk size: **10ms / 160 samples**
+> - 🖥️ 推理效果与 GPU 性能强相关，请确保运行时帧率 **> 30 fps** / Inference quality is GPU-bound — ensure **> 30 fps** at runtime
+
+---
+
+**🎞️ 传统离线模式 / Traditional Offline Mode**（WAV → 视频输出）
+
+在关卡蓝图中按以下流程调用：
+
+In the Level Blueprint, call in this order:
+
+1. `InitSystemModel` — 初始化系统模型 / Initialize the system model
+2. `ComputeVideoFromFile` — 传入 WAV 文件路径，计算并输出口型视频 / Pass a WAV file path to compute and output lip-sync video
+3. 绑定 `OnCalcVideoFinished` 回调以获取输出结果 / Bind the `OnCalcVideoFinished` callback to receive the result
+
+> ⚠️ 此模式依赖 **FFmpeg**，请确保已安装并正确配置系统环境变量。
+>
+> This mode requires **FFmpeg** — make sure it is installed and added to the system PATH.
+
+---
 
 > ⚠️ 插件第一次预加载视频时间较长，属正常现象。
 >
@@ -143,10 +175,12 @@ In your character Blueprint, drag in the **`Start Realtime Drive`** node and pas
 - 插件默认使用 `Plugins/RealAvatar/Model/` 目录下的演示模型及视频
 - **演示所用的豆包数字人框架需另行购买**：[购买链接](https://www.ifdian.net/item/1871d162443d11f1846d5254001e7c00)
 - 为保障插件的持续迭代与技术支持，**RealAvatarN 采用订阅授权制**，获取激活码后方可使用完整功能：[获取授权 / Get License](https://ifdian.net/item/dc71566241d811f18e6552540025c377)
+- 💡 **免费试用**：激活码填入 `test` 可领取 **7 天体验授权**，无需付费即可完整体验插件功能
 
 - The plugin uses demo models and videos from `Plugins/RealAvatar/Model/` by default
 - **The Doubao digital human framework used in demos must be purchased separately**: [Purchase Link](https://www.ifdian.net/item/1871d162443d11f1846d5254001e7c00)
 - To support continued development and maintenance, **RealAvatarN requires a subscription license**. An activation code is needed to unlock full functionality: [Get License](https://ifdian.net/item/dc71566241d811f18e6552540025c377)
+- 💡 **Free Trial**: Enter `test` as the activation code to claim a **7-day trial license** — no payment required
 
 ### 音频格式 / Audio Format
 
@@ -260,8 +294,6 @@ FFmpeg            :  Latest stable
 > Currently **Windows x64** only. Linux / macOS support is not available at this time.
 
 ---
-
-## 📜 开源协议 & 致谢 / License & Credits
 
 ## 📜 开源协议 & 致谢 / License & Credits
 
