@@ -42,7 +42,7 @@
 
 ## 🎬 效果演示 / Demo
 
-[![效果演示](https://github.com/NaN-Name-bilbil/RealAvatarN/raw/main/Model/preview.gif)](https://space.bilibili.com/349004635?spm_id_from=333.1007.0.0)
+[![效果演示](https://github.com/NaN-Name-bilbil/RealAvatarN/raw/main/Model/preview.gif)](https://www.bilibili.com/video/BV1iVVA6MEhF/?share_source=copy_web&vd_source=0d74e74505f24ec634d00347f4605c92)
 
 > 👆 点击 GIF 跳转 B 站查看完整演示视频 / Click GIF to watch the full demo on Bilibili
 
@@ -345,6 +345,6 @@ Full license: [DUIX.COM Community License](https://github.com/GuijiAI/HeyGem.ai/
 
 Made with ♥ for the UE Digital Human Community
 
-[📺 B站教程](https://space.bilibili.com/349004635?spm_id_from=333.1007.0.0) · [📖 Wiki 文档](#) · [🐛 Issues](../../issues) · [💬 Discussions](../../discussions)
+[📺 B站教程](https://www.bilibili.com/video/BV1iVVA6MEhF/?share_source=copy_web&vd_source=0d74e74505f24ec634d00347f4605c92) · [📖 Wiki 文档](#) · [🐛 Issues](../../issues) · [💬 Discussions](../../discussions)
 
 </div>
