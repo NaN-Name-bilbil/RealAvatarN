@@ -75,7 +75,7 @@
 | RAM | 64 GB（4K 数字人必须 / required for 4K avatar）|
 | CUDA | 12.8+ |
 | cuDNN | 9.7+ |
-| TensorRT | 10.1.6.1+ |
+| TensorRT | 10.16.1+ |
 | ONNX Runtime | GPU 1.19.2 |
 
 ### 运行时依赖 / Runtime Dependencies
