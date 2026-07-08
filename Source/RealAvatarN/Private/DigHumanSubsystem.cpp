@@ -73,6 +73,11 @@ void UDigHumanSubsystem::Deinitialize()
         ResThread->Shutdown();
         ResThread = nullptr;
     }
+    if (InferenceThread)
+    {
+        InferenceThread->Shutdown();
+        InferenceThread = nullptr;
+    }
     if (ReadThread)
     {
         ReadThread->Shutdown();
@@ -86,6 +91,7 @@ void UDigHumanSubsystem::Deinitialize()
     }
 
     if (GAudioComponent) GAudioComponent->Stop();
+    bPlaybackStarted = false;
     if (ProceduralSoundWave)
     {
         ProceduralSoundWave->RemoveFromRoot();
@@ -128,7 +134,13 @@ bool UDigHumanSubsystem::InitSystemModel(
 {
     FString pluginsdir = FPaths::Combine(FPaths::ProjectPluginsDir(), TEXT("RealAvatarN/Model"));
     Use_fp16 = true;
-    InferenceBatchSize = BatchSize;
+    InferenceBatchSize = FMath::Clamp(BatchSize, 2, 8);
+    if (InferenceBatchSize != BatchSize)
+    {
+        UE_LOG(LogDigitalHuman, Warning,
+            TEXT("InitSystemModel: BatchSize=%d is too low for realtime audio; using %d"),
+            BatchSize, InferenceBatchSize);
+    }
     Plugindir = pluginsdir;
 
     if (AudioComponent)
@@ -136,7 +148,8 @@ bool UDigHumanSubsystem::InitSystemModel(
         GAudioComponent = AudioComponent;
         GAudioComponent->SetSound(ProceduralSoundWave);
         GAudioComponent->bAutoDestroy = false;
-        GAudioComponent->Play();
+        GAudioComponent->Stop();
+        bPlaybackStarted = false;
     }
 
     return InitCustomModel(licenseKey, pluginsdir);
@@ -176,11 +189,28 @@ bool UDigHumanSubsystem::StartRealtimeDrive(
         ReadThread->Shutdown();
         ReadThread = nullptr;
     }
+    if (InferenceThread)
+    {
+        InferenceThread->Shutdown();
+        InferenceThread = nullptr;
+    }
     ReadThread = FReadImageRunnable::InitReadRunnable(
         this, TEXT(""), IdleVideoPath, TalkVideoPath, TEXT(""), TEXT(""), 1);
     if (!ReadThread)
     {
         UE_LOG(LogDigitalHuman, Error, TEXT("StartRealtimeDrive: Failed to create FReadRunnable"));
+        return false;
+    }
+
+    InferenceThread = FInferenceRunnable::Create(this);
+    if (!InferenceThread)
+    {
+        UE_LOG(LogDigitalHuman, Error, TEXT("StartRealtimeDrive: Failed to create FInferenceRunnable"));
+        if (ReadThread)
+        {
+            ReadThread->Shutdown();
+            ReadThread = nullptr;
+        }
         return false;
     }
 
@@ -193,6 +223,16 @@ bool UDigHumanSubsystem::StartRealtimeDrive(
     if (!ResThread)
     {
         UE_LOG(LogDigitalHuman, Error, TEXT("StartRealtimeDrive: Failed to create FResRunnable"));
+        if (InferenceThread)
+        {
+            InferenceThread->Shutdown();
+            InferenceThread = nullptr;
+        }
+        if (ReadThread)
+        {
+            ReadThread->Shutdown();
+            ReadThread = nullptr;
+        }
         return false;
     }
 
@@ -326,10 +366,21 @@ void UDigHumanSubsystem::generateaudio(const DHInferenceResult& Result)
 // ============================================================
 void UDigHumanSubsystem::ThreadTick()
 {
-    if (!DHEngine) return;
+    if (!DHEngine || !IsReady()) return;
 
     DHInferenceResult Result;
-    if (!DHEngine->PopResult(Result)) return;
+    static double LastEmptyLogTime = 0.0;
+    if (!DHEngine->PopResult(Result))
+    {
+        const double Now = FPlatformTime::Seconds();
+        if (Now - LastEmptyLogTime > 1.0)
+        {
+            UE_LOG(LogDigitalHuman, Warning,
+                TEXT("ThreadTick: no inference result available; audio output is waiting"));
+            LastEmptyLogTime = Now;
+        }
+        return;
+    }
 
     double TotalStart = FPlatformTime::Seconds();
 
@@ -383,7 +434,33 @@ void UDigHumanSubsystem::ThreadTick()
             }
 
             if (bRunning && ProceduralSoundWave)
+            {
                 ProceduralSoundWave->QueueAudio(AudioCopy.GetData(), AudioCopy.Num());
+
+                const int32 StartPlaybackBytes = 16000 * 2 / 2; // 0.5s prebuffer
+                if (!bPlaybackStarted
+                    && GAudioComponent
+                    && ProceduralSoundWave->GetAvailableAudioByteCount() >= StartPlaybackBytes)
+                {
+                    bPlaybackStarted = true;
+                    const int32 BufferedBytes = ProceduralSoundWave->GetAvailableAudioByteCount();
+                    TWeakObjectPtr<UDigHumanSubsystem> WeakThis(this);
+                    AsyncTask(ENamedThreads::GameThread, [WeakThis, BufferedBytes]()
+                        {
+                            if (!WeakThis.IsValid()
+                                || !WeakThis->GAudioComponent
+                                || !WeakThis->ProceduralSoundWave)
+                            {
+                                return;
+                            }
+
+                            WeakThis->GAudioComponent->Play();
+                            UE_LOG(LogDigitalHuman, Log,
+                                TEXT("Audio playback started after prebuffer: %d bytes"),
+                                BufferedBytes);
+                        });
+                }
+            }
         }
 
     }
@@ -602,20 +679,8 @@ void UDigHumanSubsystem::UpdateTexture(unsigned char* ImageData, int Width, int 
 // ============================================================
 void UDigHumanSubsystem::Tick(float DeltaTime)
 {
-    if (!IsReady())
-        return;
-
-
-
-    const double Now = FPlatformTime::Seconds();
-
-
-    if ((Now - LastInferenceTime) >= TargetInterval)
-    {//必须限制在30fps，不然120fps会拉爆内存
-        LastInferenceTime = Now;
-
-        TickRealtime();
-    }
+    // Realtime inference is driven by FInferenceRunnable. Keeping this
+    // GameThread tick lightweight prevents UE frame rate from throttling audio production.
 }
 
 
@@ -690,7 +755,126 @@ void UDigHumanSubsystem::ChangeAvatarStatue(int32 statue)
 
 
 // ============================================================
-//  FReadImageRunnable（原有，保持不变）
+//  FInferenceRunnable
+// ============================================================
+FInferenceRunnable* FInferenceRunnable::Create(UDigHumanSubsystem* InSubsystem)
+{
+    if (!FPlatformProcess::SupportsMultithreading())
+    {
+        UE_LOG(LogDigitalHuman, Warning, TEXT("FInferenceRunnable: Multithreading not supported"));
+        return nullptr;
+    }
+
+    FInferenceRunnable* Instance = new FInferenceRunnable(InSubsystem);
+    Instance->InferenceRunnableThread = FRunnableThread::Create(
+        Instance, TEXT("DHInferenceRunnable"), 0, TPri_Normal);
+
+    if (!Instance->InferenceRunnableThread)
+    {
+        UE_LOG(LogDigitalHuman, Error, TEXT("FInferenceRunnable: Thread creation failed"));
+        delete Instance;
+        return nullptr;
+    }
+    return Instance;
+}
+
+FInferenceRunnable::FInferenceRunnable(UDigHumanSubsystem* InSubsystem)
+    : Subsystem(InSubsystem)
+{
+}
+
+FInferenceRunnable::~FInferenceRunnable() {}
+
+bool FInferenceRunnable::Init()
+{
+    bRunning = true;
+    return true;
+}
+
+uint32 FInferenceRunnable::Run()
+{
+    double WakeAt = FPlatformTime::Seconds();
+    int32 EmptyWaitCount = 0;
+    int32 TickCount = 0;
+    double LastLogTime = FPlatformTime::Seconds();
+
+    while (bRunning)
+    {
+        double CurrentInterval = 0.01;
+
+        if (Subsystem && Subsystem->IsReady())
+        {
+            const int32 BatchSize = FMath::Clamp(Subsystem->InferenceBatchSize, 1, 8);
+            CurrentInterval = double(BatchSize * 480) / 16000.0;
+
+            const double T0 = FPlatformTime::Seconds();
+            Subsystem->TickRealtime();
+            ++TickCount;
+
+            const double CostMs = (FPlatformTime::Seconds() - T0) * 1000.0;
+            const double BudgetMs = CurrentInterval * 1000.0;
+            if (CostMs > BudgetMs)
+            {
+                UE_LOG(LogDigitalHuman, Warning,
+                    TEXT("FInferenceRunnable: TickRealtime cost %.2f ms exceeds %.2f ms budget; audio may underrun"),
+                    CostMs, BudgetMs);
+            }
+
+            const double NowLog = FPlatformTime::Seconds();
+            if (NowLog - LastLogTime >= 1.0)
+            {
+                UE_LOG(LogDigitalHuman, Verbose,
+                    TEXT("FInferenceRunnable: %.1f ticks/sec"),
+                    TickCount / (NowLog - LastLogTime));
+                TickCount = 0;
+                LastLogTime = NowLog;
+            }
+
+            WakeAt += CurrentInterval;
+        }
+        else
+        {
+            ++EmptyWaitCount;
+            if (EmptyWaitCount % 100 == 0)
+            {
+                UE_LOG(LogDigitalHuman, Verbose,
+                    TEXT("FInferenceRunnable: waiting for subsystem readiness"));
+            }
+            WakeAt = FPlatformTime::Seconds() + 0.01;
+        }
+
+        double Remaining = WakeAt - FPlatformTime::Seconds();
+        if (Remaining > 0.002)
+        {
+            FPlatformProcess::SleepNoStats(float(Remaining) - 0.002f);
+        }
+        while (FPlatformTime::Seconds() < WakeAt && bRunning) {}
+
+        if (WakeAt < FPlatformTime::Seconds() - CurrentInterval)
+        {
+            WakeAt = FPlatformTime::Seconds();
+        }
+    }
+    return 0;
+}
+
+void FInferenceRunnable::Stop() { bRunning = false; }
+
+void FInferenceRunnable::Shutdown()
+{
+    bRunning = false;
+    if (InferenceRunnableThread)
+    {
+        InferenceRunnableThread->WaitForCompletion();
+        delete InferenceRunnableThread;
+        InferenceRunnableThread = nullptr;
+    }
+    UE_LOG(LogDigitalHuman, Log, TEXT("FInferenceRunnable: Shutdown complete"));
+}
+
+
+// ============================================================
+//  FReadImageRunnable（预处理视频）
 // ============================================================
 FReadImageRunnable* FReadImageRunnable::InitReadRunnable(
     UDigHumanSubsystem* inActor,
