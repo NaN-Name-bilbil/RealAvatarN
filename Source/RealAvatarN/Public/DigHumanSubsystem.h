@@ -16,6 +16,7 @@
 class FReadImageRunnable;
 class FWavPushRunnable;
 class FResRunnable;
+class FInferenceRunnable;
 
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnModelLoaded, bool, result);
@@ -60,7 +61,7 @@ public:
 	bool InitCustomModel(const FString& licenseKey, const FString& MaskDir);
 
 	UFUNCTION(BlueprintCallable, Category = "DigHuman")
-	bool InitSystemModel(const FString& licenseKey, int32 BatchSize = 1, UAudioComponent* AudioComponent = nullptr);
+	bool InitSystemModel(const FString& licenseKey, int32 BatchSize = 2, UAudioComponent* AudioComponent = nullptr);
 
 	UFUNCTION(BlueprintCallable, Category = "DigHuman")
 	bool StartRealtimeDrive(const FString& IdleVideoPath, const FString& TalkVideoPath, UImage* Avatar_Image);
@@ -138,7 +139,7 @@ public:
 	FOnWavPushFinished OnWavPushFinished;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DigHuman")
-	int32 InferenceBatchSize = 1;
+	int32 InferenceBatchSize = 2;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DigHuman")
 	bool Use_fp16 = true;
@@ -158,6 +159,7 @@ public:
 	FReadImageRunnable* ReadThread = nullptr;
 	FWavPushRunnable* WavPushThread = nullptr;
 	FResRunnable* ResThread = nullptr;
+	FInferenceRunnable* InferenceThread = nullptr;
 
 	UTexture2D* OutputTexture = nullptr;
 	FTextureRHIRef TextureRHI;
@@ -189,6 +191,7 @@ private:
 	int32   TexHeight = 3840;
 	double  LastConsumeTime = 0.0;
 	bool    bRunning = false;
+	bool    bPlaybackStarted = false;
 
 	// 复用 buffer：generateaudio 用，避免每帧 heap alloc
 	TArray<uint8> AudioConvertBuffer;
@@ -202,7 +205,31 @@ private:
 
 
 // ============================================================
-//  FReadImageRunnable — 推理驱动线程（原有，保持不变）
+//  FInferenceRunnable — 独立推理驱动线程
+// ============================================================
+class REALAVATARN_API FInferenceRunnable : public FRunnable
+{
+public:
+	static FInferenceRunnable* Create(UDigHumanSubsystem* InSubsystem);
+
+	virtual bool   Init() override;
+	virtual uint32 Run()  override;
+	virtual void   Stop() override;
+	void Shutdown();
+
+protected:
+	FInferenceRunnable(UDigHumanSubsystem* InSubsystem);
+	virtual ~FInferenceRunnable();
+
+private:
+	FRunnableThread* InferenceRunnableThread = nullptr;
+	UDigHumanSubsystem* Subsystem = nullptr;
+	TAtomic<bool> bRunning{ false };
+};
+
+
+// ============================================================
+//  FReadImageRunnable — 预处理视频线程
 // ============================================================
 class REALAVATARN_API FReadImageRunnable : public FRunnable
 {
