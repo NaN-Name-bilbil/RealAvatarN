@@ -1,4 +1,4 @@
-// DigHumanSubsystem.h
+﻿// DigHumanSubsystem.h
 #pragma once
 
 #include "CoreMinimal.h"
@@ -152,6 +152,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio")
 	int32 AudioSampleRate = 16000;
 
+	// Startup audio buffer used as the AV sync delay for streamed inference.
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio", meta = (ClampMin = "0.0", ClampMax = "2.0", UIMin = "0.0", UIMax = "1.0"))
+	float StreamAudioSyncDelaySeconds = 0.5f;
+
+	// Safety cap for delayed video frames waiting for audio playback to start.
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Audio", meta = (ClampMin = "1", ClampMax = "120", UIMin = "1", UIMax = "60"))
+	int32 MaxPendingVideoSyncFrames = 30;
+
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "DigHuman")
 	bool debug = true;
 
@@ -192,6 +200,18 @@ private:
 	double  LastConsumeTime = 0.0;
 	bool    bRunning = false;
 	bool    bPlaybackStarted = false;
+
+	struct FPendingVideoFrame
+	{
+		TArray<uint8> Data;
+		int32 Width = 0;
+		int32 Height = 0;
+		int64 AudioStartSample = 0;
+	};
+	TArray<FPendingVideoFrame> PendingVideoFrames;
+	FCriticalSection PendingVideoFramesCS;
+	int64   TotalQueuedAudioSamples = 0;
+	double  AudioPlaybackStartTime = 0.0;
 
 	// 复用 buffer：generateaudio 用，避免每帧 heap alloc
 	TArray<uint8> AudioConvertBuffer;
