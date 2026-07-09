@@ -1,4 +1,4 @@
-// DigHumanSubsystem.cpp
+﻿// DigHumanSubsystem.cpp
 #include "DigHumanSubsystem.h"
 #include "Async/Async.h"
 #include "Misc/Paths.h"
@@ -92,6 +92,12 @@ void UDigHumanSubsystem::Deinitialize()
 
     if (GAudioComponent) GAudioComponent->Stop();
     bPlaybackStarted = false;
+    {
+        FScopeLock PendingVideoLock(&PendingVideoFramesCS);
+        PendingVideoFrames.Reset();
+    }
+    TotalQueuedAudioSamples = 0;
+    AudioPlaybackStartTime = 0.0;
     if (ProceduralSoundWave)
     {
         ProceduralSoundWave->RemoveFromRoot();
@@ -282,6 +288,26 @@ void UDigHumanSubsystem::StopWavStreamTest()
         WavPushThread = nullptr;
         UE_LOG(LogDigitalHuman, Log, TEXT("StopWavStreamTest: WavPushRunnable stopped"));
     }
+
+    if (GAudioComponent)
+    {
+        GAudioComponent->Stop();
+    }
+
+    if (ProceduralSoundWave)
+    {
+        ProceduralSoundWave->ResetAudio();
+    }
+
+    bPlaybackStarted = false;
+    {
+        FScopeLock PendingVideoLock(&PendingVideoFramesCS);
+        PendingVideoFrames.Reset();
+    }
+    TotalQueuedAudioSamples = 0;
+    AudioPlaybackStartTime = 0.0;
+
+    UE_LOG(LogDigitalHuman, Log, TEXT("StopWavStreamTest: playback state reset"));
 }
 
 
@@ -383,10 +409,13 @@ void UDigHumanSubsystem::ThreadTick()
     }
 
     double TotalStart = FPlatformTime::Seconds();
+    const bool bResultHasAudio =
+        Result.AudioPCMData && Result.AudioSamplesCount > 0
+        && ProceduralSoundWave && GAudioComponent;
+    const int64 ResultAudioStartSample = TotalQueuedAudioSamples;
 
     // ── 音频：GameThread（USoundWaveProcedural 要求）─────────────
-    if (Result.AudioPCMData && Result.AudioSamplesCount > 0
-        && ProceduralSoundWave && GAudioComponent)
+    if (bResultHasAudio)
     {
         // 拷贝到局部 buffer 后投递，避免 Result 在 GameThread 执行前被 FreeResult 释放
         TArray<uint8> AudioCopy;
@@ -436,13 +465,16 @@ void UDigHumanSubsystem::ThreadTick()
             if (bRunning && ProceduralSoundWave)
             {
                 ProceduralSoundWave->QueueAudio(AudioCopy.GetData(), AudioCopy.Num());
+                TotalQueuedAudioSamples += Result.AudioSamplesCount;
 
-                const int32 StartPlaybackBytes = 16000 * 2 / 2; // 0.5s prebuffer
+                const float ClampedSyncDelaySeconds = FMath::Clamp(StreamAudioSyncDelaySeconds, 0.0f, 2.0f);
+                const int32 StartPlaybackBytes = FMath::Max(0, FMath::RoundToInt(AudioSampleRate * 2 * ClampedSyncDelaySeconds));
                 if (!bPlaybackStarted
                     && GAudioComponent
                     && ProceduralSoundWave->GetAvailableAudioByteCount() >= StartPlaybackBytes)
                 {
                     bPlaybackStarted = true;
+                    AudioPlaybackStartTime = FPlatformTime::Seconds();
                     const int32 BufferedBytes = ProceduralSoundWave->GetAvailableAudioByteCount();
                     TWeakObjectPtr<UDigHumanSubsystem> WeakThis(this);
                     AsyncTask(ENamedThreads::GameThread, [WeakThis, BufferedBytes]()
@@ -456,8 +488,9 @@ void UDigHumanSubsystem::ThreadTick()
 
                             WeakThis->GAudioComponent->Play();
                             UE_LOG(LogDigitalHuman, Log,
-                                TEXT("Audio playback started after prebuffer: %d bytes"),
-                                BufferedBytes);
+                                TEXT("Audio playback started after prebuffer: %d bytes, sync delay %.3f s"),
+                                BufferedBytes,
+                                WeakThis->StreamAudioSyncDelaySeconds);
                         });
                 }
             }
@@ -465,13 +498,80 @@ void UDigHumanSubsystem::ThreadTick()
 
     }
 
-    // ── 图像：UpdateTexture 内部走 ENQUEUE_RENDER_COMMAND，此处可直接调用 ──
+    // ── 图像：跟随音频预缓冲延迟，避免开头口型先于/慢于声音 ──
     if (Result.ImageData)
     {
-        //double T0 = FPlatformTime::Seconds();
-        UpdateTexture(Result.ImageData, Result.ImageWidth, Result.ImageHeight);
-        //double T1 = FPlatformTime::Seconds();
-        //UE_LOG(LogDigitalHuman, Log,TEXT("[ThreadTick] UpdateTexture (%dx%d): %.2f ms"),Result.ImageWidth, Result.ImageHeight, (T1 - T0) * 1000.0);
+        const bool bUseAudioSync = bResultHasAudio;
+
+        if (bUseAudioSync)
+        {
+            FPendingVideoFrame FrameToDisplay;
+            bool bHasFrameToDisplay = false;
+
+            {
+                FScopeLock PendingVideoLock(&PendingVideoFramesCS);
+
+                const int32 ImageBytes = Result.ImageWidth * Result.ImageHeight * 4;
+                if (ImageBytes > 0)
+                {
+                    FPendingVideoFrame PendingFrame;
+                    PendingFrame.Width = Result.ImageWidth;
+                    PendingFrame.Height = Result.ImageHeight;
+                    PendingFrame.AudioStartSample = ResultAudioStartSample;
+                    PendingFrame.Data.SetNumUninitialized(ImageBytes);
+                    FMemory::Memcpy(PendingFrame.Data.GetData(), Result.ImageData, ImageBytes);
+                    PendingVideoFrames.Add(MoveTemp(PendingFrame));
+
+                    const int32 MaxBufferedFrames = FMath::Clamp(MaxPendingVideoSyncFrames, 1, 120);
+                    while (PendingVideoFrames.Num() > MaxBufferedFrames)
+                    {
+                        PendingVideoFrames.RemoveAt(0, 1, false);
+                        UE_LOG(LogDigitalHuman, Warning,
+                            TEXT("PendingVideoFrames exceeded %d, dropping oldest frame"),
+                            MaxBufferedFrames);
+                    }
+                }
+
+                if (bPlaybackStarted && AudioPlaybackStartTime > 0.0 && PendingVideoFrames.Num() > 0)
+                {
+                    const double AudioElapsedSeconds = FMath::Max(0.0, FPlatformTime::Seconds() - AudioPlaybackStartTime);
+                    const int64 PlayedSamples = (int64)FMath::FloorToDouble(AudioElapsedSeconds * (double)AudioSampleRate);
+                    const int64 SyncLeadSamples = FMath::Max(1, AudioSampleRate / FMath::Max(1, FMath::RoundToInt(VideoFPS)));
+
+                    int32 DisplayIndex = INDEX_NONE;
+                    for (int32 Index = 0; Index < PendingVideoFrames.Num(); ++Index)
+                    {
+                        if (PendingVideoFrames[Index].AudioStartSample <= PlayedSamples + SyncLeadSamples)
+                        {
+                            DisplayIndex = Index;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+
+                    if (DisplayIndex != INDEX_NONE)
+                    {
+                        FrameToDisplay = MoveTemp(PendingVideoFrames[DisplayIndex]);
+                        PendingVideoFrames.RemoveAt(0, DisplayIndex + 1, false);
+                        bHasFrameToDisplay = true;
+                    }
+                }
+            }
+
+            if (bHasFrameToDisplay)
+            {
+                UpdateTexture(FrameToDisplay.Data.GetData(), FrameToDisplay.Width, FrameToDisplay.Height);
+            }
+        }
+        else
+        {
+            //double T0 = FPlatformTime::Seconds();
+            UpdateTexture(Result.ImageData, Result.ImageWidth, Result.ImageHeight);
+            //double T1 = FPlatformTime::Seconds();
+            //UE_LOG(LogDigitalHuman, Log,TEXT("[ThreadTick] UpdateTexture (%dx%d): %.2f ms"),Result.ImageWidth, Result.ImageHeight, (T1 - T0) * 1000.0);
+        }
     }
 
     // ── FreeResult：后台线程，不占 GameThread ─────────────────────
