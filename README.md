@@ -71,7 +71,7 @@
 |---|---|
 | OS | Windows 10/11 x64 |
 | CPU | Intel i5-13600K 或同等级 / or equivalent |
-| GPU | NVIDIA RTX 3080 / A5000（16GB+ 显存）|
+| GPU | NVIDIA RTX 3080 / A5000（16GB+ 显存）(暂不支持50系列显卡)|
 | RAM | 64 GB（4K 数字人必须 / required for 4K avatar）|
 | CUDA | 12.8 |
 | cuDNN | 9.7 |
