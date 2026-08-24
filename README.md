@@ -71,11 +71,11 @@
 |---|---|
 | OS | Windows 10/11 x64 |
 | CPU | Intel i5-13600K 或同等级 / or equivalent |
-| GPU | NVIDIA RTX 3080 / A5000（16GB+ 显存）(暂不支持50系列显卡)|
+| GPU | NVIDIA RTX 3080 / A5000（16GB+ 显存）(支持50系列显卡)|
 | RAM | 64 GB（4K 数字人必须 / required for 4K avatar）|
 | CUDA | 12.8 |
 | cuDNN | 9.7 |
-| TensorRT | 10.16.1 |
+| TensorRT-RTX | 1.6.1.120 |
 | ONNX Runtime | GPU 1.19.2 |
 
 ### 运行时依赖 / Runtime Dependencies
@@ -84,9 +84,9 @@
 
 Before using the plugin, make sure the following environments are correctly configured:
 
-- **CUDA 12.8** — [下载 / Download](https://developer.nvidia.com/cuda-downloads)
+- **CUDA 12.8** — [下载 / Download](https://developer.nvidia.com/cuda-12-8-0-download-archive)
 - **cuDNN 9.7** — [下载 / Download](https://developer.nvidia.com/cudnn-archive)
-- **TensorRT 10.16.1** — [下载 / Download](https://developer.nvidia.com/tensorrt/download/10x)
+- **TensorRT-RTX1.6.1.120** — [下载 / Download](https://developer.nvidia.com/tensorrt-rtx)
 - **FFmpeg**（非流式模式必须 / required for non-streaming mode）— [下载 / Download](https://ffmpeg.org/download.html) ，安装后需加入系统环境变量 / add to system PATH
 - **Dependencies 工具**（用于排查缺失 DLL / for DLL diagnosis）— [GitHub](https://github.com/lucasg/Dependencies)
 
