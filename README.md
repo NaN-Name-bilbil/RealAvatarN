@@ -57,7 +57,7 @@
 | 纯 ONNX GPU / Pure ONNX GPU | ~55 ms | ~18 fps |
 | ONNX + TensorRT | ~27 ms | **~40 fps** ✅ |
 
-> 💡 游戏本 RTX 4060 可运行，实测帧率约 **22 fps**。4K 数字人 RAM **必须 ≥ 32GB**（视频预加载可能占用约 16GB）。
+> 💡 游戏本 RTX 4060 可运行，实测帧率约 **33 fps**。4K 数字人 RAM **必须 ≥ 32GB**（视频预加载可能占用约 16GB）。
 >
 > A gaming laptop with RTX 4060 can run this plugin at ~**22 fps**. For 4K avatars, RAM **must be ≥ 32GB** (video preloading may consume ~16GB).
 
@@ -71,7 +71,7 @@
 |---|---|
 | OS | Windows 10/11 x64 |
 | CPU | Intel i5-13600K 或同等级 / or equivalent |
-| GPU | NVIDIA RTX 3080 / A5000（16GB+ 显存）(支持50系列显卡)|
+| GPU | NVIDIA RTX 3080 / 4060Ti（8GB+ 显存）(支持50系列显卡)|
 | RAM | 64 GB（4K 数字人必须 / required for 4K avatar）|
 | CUDA | 12.8 |
 | cuDNN | 9.7 |
